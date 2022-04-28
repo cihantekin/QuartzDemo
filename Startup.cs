@@ -25,7 +25,10 @@ namespace QuartzDemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddQuartz(async q => { await JobSchedulerService.StartAsync(); });
+            services.AddQuartz(async q => { 
+                var schedulerService = new JobSchedulerService();
+                await schedulerService.StartAsync(); 
+            });
             services.AddQuartzHostedService(options =>
             {
                 options.WaitForJobsToComplete = true;
